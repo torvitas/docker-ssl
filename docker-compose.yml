@@ -4,10 +4,10 @@ ssl:
         - data
     environment:
         CA: "/usr/local/etc/ssl/ca/root.ca"
-        DNS_0: spectra.localhost
-        DNS_1: spectra.localhost.de
-        DNS_2: spectra.localhost.at
-        DNS_3: spectra.localhost.ch
+        DNS_0: example.localhost
+        DNS_1: example.localhost.de
+        DNS_2: example.localhost.at
+        DNS_3: example.localhost.ch
 data:
     build: "./"
     entrypoint: "/bin/true"
