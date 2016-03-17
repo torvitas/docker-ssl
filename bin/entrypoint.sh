@@ -23,6 +23,13 @@ else
     echo '>> Using existing certificate, doing nothing.'
 fi
 
+if [ ! -f ${PROXY_CERTS}${KEY_FILE} ]; then
+    cp ${KEY} ${PROXY_CERTS}
+    cp ${CRT} ${PROXY_CERTS}
+else
+    echo '>> Certificate already available for proxy, doing nothing.'
+fi
+
 echo ">> CSR:"
 openssl req -in ${CSR} -noout -text
 echo ">> CRT:"

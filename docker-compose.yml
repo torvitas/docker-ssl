@@ -3,7 +3,6 @@ ssl:
     volumes_from:
         - data
     environment:
-        CA: "/usr/local/etc/ssl/ca/root.ca"
         DNS_0: example.localhost
         DNS_1: example.localhost.de
         DNS_2: example.localhost.at
