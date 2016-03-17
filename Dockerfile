@@ -1,4 +1,5 @@
 FROM debian:jessie
+MAINTAINER "Sascha Marcel Schmidt" <docker@saschaschmidt.net>
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
