@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export DNS=${DNS:-'*.localhost'}
+export UNIQUE_CERT_NAME=${UNIQUE_CERT_NAME:-}
 
 export CN=${CN:-'*.localhost'}
 export OU=${OU:-'A Company that Makes Everything'}
@@ -20,9 +20,9 @@ export CA_CN=${CA_CN:-'*.localhost'}
 export CA_OU=${CA_OU:-'A Company that Makes Everything'}
 export CA_O=${CA_O:-'ACME'}
 
-export KEY_FILE=${KEY_FILE:-'host.key'}
-export CSR_FILE=${CSR_FILE:-'host.csr'}
-export CRT_FILE=${CRT_FILE:-'host.crt'}
+export KEY_FILE=${KEY_FILE:-${UNIQUE_CERT_NAME}'.key'}
+export CSR_FILE=${CSR_FILE:-${UNIQUE_CERT_NAME}'.csr'}
+export CRT_FILE=${CRT_FILE:-${UNIQUE_CERT_NAME}'.crt'}
 
 export KEY=${KEY:-${CERTS_FOLDER}${KEY_FILE}}
 export CSR=${CSR:-${CERTS_FOLDER}${CSR_FILE}}
