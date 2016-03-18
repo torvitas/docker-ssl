@@ -42,6 +42,7 @@ if [ ! -f ${PROXY_CERTS}${KEY_FILE} ]; then
     mkdir -p ${PROXY_CERTS}
     cp -v ${CRT} ${PROXY_CERTS}'/'
     cp -v ${KEY} ${PROXY_CERTS}'/'
+    cp -v ${CA_CRT} '/local/ca/'
 else
     echo '>> Using existing proxy certificate, doing nothing.'
 fi
@@ -52,5 +53,8 @@ if [ ! host_setup ]; then
     echo ">> CRT:"
     openssl x509 -in ${CRT} -text -noout
 fi
+
+chown 1000.1000 -R ${CERTS_FOLDER}
+chown 1000.1000 -R ${CA_FOLDER}
 
 exec "$@"
