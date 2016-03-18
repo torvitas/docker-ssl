@@ -3,10 +3,11 @@ ssl:
     volumes_from:
         - data
     environment:
-        DNS_0: example.localhost
-        DNS_1: example.localhost.de
-        DNS_2: example.localhost.at
-        DNS_3: example.localhost.ch
+        UNIQUE_CERT_NAME: 'example'
+        DNS_0: 'example.localhost'
+        DNS_1: 'example.localhost.de'
+        DNS_2: 'example.localhost.at'
+        DNS_3: 'example.localhost.ch'
 data:
     build: "./"
     entrypoint: "/bin/true"

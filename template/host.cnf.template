@@ -1,19 +1,28 @@
-[ req ]
-default_bits = 2048
-prompt = no
-req_extensions = v3_req
-distinguished_name = req_distinguished_name
+HOME = ${CERTS_FOLDER}
 
-[ req_distinguished_name ]
+####################################################################
+[ req ]
+default_bits        = 2048
+default_keyfile     = ${KEY_FILE}
+distinguished_name  = server_distinguished_name
+req_extensions      = server_req_extensions
+string_mask         = utf8only
+prompt = no
+
+####################################################################
+[ server_distinguished_name ]
 CN           = ${CN}
 OU           = ${OU}
 O            = ${O}
 
-[ v3_req ]
-# Extensions to add to a certificate request
-basicConstraints = CA:FALSE
-keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-subjectAltName = @alt_names
+####################################################################
+[ server_req_extensions ]
+subjectKeyIdentifier        = hash
+basicConstraints        = CA:FALSE
+keyUsage            = digitalSignature, keyEncipherment
+subjectAltName          = @alternate_names
+nsComment           = "OpenSSL Generated Certificate"
 
-[alt_names]
+####################################################################
+[ alternate_names ]
 $(getAlternativeNames)
