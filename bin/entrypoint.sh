@@ -6,7 +6,7 @@
 . /usr/local/lib/ssl/template.renderer.sh
 
 # make sure there the specified ca exists
-if [ ! -f ${CA_KEY} ]; then
+if [ ! -f 'local/ca/'${CA_CRT_FILE} ]; then
     cd ${CA_FOLDER}
     echo '>> Rendering ca config template.'
     render /usr/local/etc/ssl/template/ca.cnf.template -- > /usr/local/etc/ssl/ca.cnf
@@ -17,6 +17,7 @@ if [ ! -f ${CA_KEY} ]; then
     openssl x509 -in ${CA_CRT_FILE} -text -noout
     ls -lah ${CA_FOLDER}
 else
+    cp -v '/local/ca/'${CA_CRT_FILE} ${CA_CRT}
     echo '>> Using existing CA.'
 fi
 
