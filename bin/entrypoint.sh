@@ -42,9 +42,14 @@ if [ ! -f ${PROXY_CERTS}${KEY_FILE} ]; then
     mkdir -p ${PROXY_CERTS}
     cp -v ${CRT} ${PROXY_CERTS}'/'
     cp -v ${KEY} ${PROXY_CERTS}'/'
-    cp -v ${CA_CRT} '/local/ca/'
 else
     echo '>> Using existing proxy certificate, doing nothing.'
+fi
+
+# publish ca to local machine if necessary
+if [ ! -f 'local/ca/'${CA_CRT_FILE} ]; then
+    mkdir -p '/local/ca/'
+    cp -v ${CA_CRT} '/local/ca/'
 fi
 
 if [ ! host_setup ]; then
