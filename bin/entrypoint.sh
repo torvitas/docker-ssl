@@ -28,10 +28,11 @@ if [ ! -f ${KEY} ]; then
     render /usr/local/etc/ssl/template/host.cnf.template -- > /usr/local/etc/ssl/host.cnf
     cat /usr/local/etc/ssl/host.cnf
     echo '>> Creating certificate signing request.'
-    openssl req -config /usr/local/etc/ssl/host.cnf -newkey rsa:2048 -sha256 -nodes -out ${CSR_FILE} -outform PEM
+    openssl req -config /usr/local/etc/ssl/host.cnf -newkey rsa:2048 -sha256 -nodes -out ${CSR_FILE}
     openssl req -text -noout -verify -in ${CSR_FILE}
     echo '>> Signing certificate using ca in '${CA_FOLDER}
     openssl ca -batch -config /usr/local/etc/ssl/ca.cnf -policy signing_policy -extensions signing_req -out ${CRT_FILE} -infiles ${CSR_FILE}
+    openssl x509 -in ${CRT_FILE} -text -noout
 else
     echo '>> Using existing certificate, doing nothing.'
 fi
@@ -39,8 +40,8 @@ fi
 # publish cert to nginx proxy if necessary
 if [ ! -f ${PROXY_CERTS}${KEY_FILE} ]; then
     mkdir -p ${PROXY_CERTS}
-    cp -v ${KEY} ${PROXY_CERTS}
-    cp -v ${CRT} ${PROXY_CERTS}
+    cp -v ${CRT} ${PROXY_CERTS}'/'
+    cp -v ${KEY} ${PROXY_CERTS}'/'
 else
     echo '>> Using existing proxy certificate, doing nothing.'
 fi
@@ -49,7 +50,7 @@ if [ ! host_setup ]; then
     echo ">> CSR:"
     openssl req -in ${CSR} -noout -text
     echo ">> CRT:"
-    cat ${CRT}
+    openssl x509 -in ${CRT} -text -noout
 fi
 
 exec "$@"

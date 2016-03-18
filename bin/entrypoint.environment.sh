@@ -20,8 +20,8 @@ export CA_CN=${CA_CN:-'A Company that Validates Everything'}
 export CA_O=${CA_O:-'ACVE'}
 export CA_OU=${CA_OU:-'Validations for everything'}
 
-export KEY_FILE=${KEY_FILE:-${UNIQUE_CERT_NAME}'key.pem'}
-export CRT_FILE=${CRT_FILE:-${UNIQUE_CERT_NAME}'crt.pem'}
+export KEY_FILE=${KEY_FILE:-${UNIQUE_CERT_NAME}'.key'}
+export CRT_FILE=${CRT_FILE:-${UNIQUE_CERT_NAME}'.crt'}
 export CSR_FILE=${CSR_FILE:-${UNIQUE_CERT_NAME}'.csr'}
 
 export KEY=${KEY:-${CERTS_FOLDER}'/'${KEY_FILE}}
