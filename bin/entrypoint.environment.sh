@@ -12,7 +12,7 @@ export CERTS_FOLDER=${CERTS_FOLDER:-'/usr/local/share/ca-certificates/certs'}
 export CA_FOLDER=${CA_FOLDER:-'/usr/local/share/ca-certificates/ca'}
 
 export CA_KEY_FILE=${CA_KEY_FILE:-${UNIQUE_CERT_NAME}'cakey.pem'}
-export CA_CRT_FILE=${CA_CRT_FILE:-${UNIQUE_CERT_NAME}'cacrt.pem'}
+export CA_CRT_FILE=${CA_CRT_FILE:-${UNIQUE_CERT_NAME}'cacrt.pem.crt'}
 
 export CA_KEY=${CA_KEY:-${CA_FOLDER}'/'${CA_KEY_FILE}}
 export CA_CRT=${CA_CRT:-${CA_FOLDER}'/'${CA_CRT_FILE}}
