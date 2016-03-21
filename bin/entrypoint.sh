@@ -6,7 +6,7 @@
 . /usr/local/lib/ssl/template.renderer.sh
 
 # make sure there the specified ca exists
-if [ ! -f ${LOCAL_CA}'/'${CA_CRT_FILE} ]; then
+if [ ! -f ${CA_CRT} ]; then
     cd ${CA_FOLDER}
     echo '>> Rendering ca config template.'
     render /usr/local/etc/ssl/template/ca.cnf.template -- > /usr/local/etc/ssl/ca.cnf
@@ -21,7 +21,7 @@ else
 fi
 
 # create cert if necessary
-if [ ! -f ${LOCAL_CERTS}'/'${CRT_FILE} ]; then
+if [ ! -f ${CRT} ]; then
     cd ${CERTS_FOLDER}
     host_setup=1
     echo '>> Rendering host config template.'
