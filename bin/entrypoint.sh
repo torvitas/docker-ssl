@@ -6,7 +6,7 @@
 . /usr/local/lib/ssl/template.renderer.sh
 
 # make sure there the specified ca exists
-if [ ! -f 'local/ca/'${CA_CRT_FILE} ]; then
+if [ ! -f ${LOCAL_CA}'/'${CA_CRT_FILE} ]; then
     cd ${CA_FOLDER}
     echo '>> Rendering ca config template.'
     render /usr/local/etc/ssl/template/ca.cnf.template -- > /usr/local/etc/ssl/ca.cnf
@@ -17,12 +17,11 @@ if [ ! -f 'local/ca/'${CA_CRT_FILE} ]; then
     openssl x509 -in ${CA_CRT_FILE} -text -noout
     ls -lah ${CA_FOLDER}
 else
-    cp -v '/local/ca/'${CA_CRT_FILE} ${CA_CRT}
-    echo '>> Using existing CA.'
+    echo '>> Found existing CA '${LOCAL_CA}'/'${CA_FILE}
 fi
 
 # create cert if necessary
-if [ ! -f ${KEY} ]; then
+if [ ! -f ${LOCAL_CERTS}'/'${CRT_FILE} ]; then
     cd ${CERTS_FOLDER}
     host_setup=1
     echo '>> Rendering host config template.'
@@ -35,32 +34,42 @@ if [ ! -f ${KEY} ]; then
     openssl ca -batch -config /usr/local/etc/ssl/ca.cnf -policy signing_policy -extensions signing_req -out ${CRT_FILE} -infiles ${CSR_FILE}
     openssl x509 -in ${CRT_FILE} -text -noout
 else
-    echo '>> Using existing certificate, doing nothing.'
+    echo '>> Found existing certificate '${LOCAL_CERTS}'/'${CRT_FILE}''
 fi
 
-# publish cert to nginx proxy if necessary
-if [ ! -f ${PROXY_CERTS}${KEY_FILE} ]; then
-    mkdir -p ${PROXY_CERTS}
-    cp -v ${CRT} ${PROXY_CERTS}'/'
-    cp -v ${KEY} ${PROXY_CERTS}'/'
+# publish cert to local folder if necessary
+if [ ! -f ${LOCAL_CERTS}'/'${CRT_FILE} ]; then
+    mkdir -p ${LOCAL_CERTS}
+    cp -v ${CRT} ${LOCAL_CERTS}'/'
 else
-    echo '>> Using existing proxy certificate, doing nothing.'
+    echo '>> Certificate already published to local.'
+fi
+
+# publish key to local folder if necessary
+if [ ! -f ${LOCAL_CERTS}'/'${KEY_FILE} ]; then
+    mkdir -p ${LOCAL_CERTS}
+    cp -v ${KEY} ${LOCAL_CERTS}'/'
+else
+    echo '>> Key already published to local.'
 fi
 
 # publish ca to local machine if necessary
-if [ ! -f 'local/ca/'${CA_CRT_FILE} ]; then
-    mkdir -p '/local/ca/'
-    cp -v ${CA_CRT} '/local/ca/'
+if [ ! -f ${LOCAL_CA}'/'${CA_CRT_FILE} ]; then
+    mkdir -p ${LOCAL_CA}
+    cp -v ${CA_CRT} ${LOCAL_CA}
+else
+    echo '>> CA certificate already published to local.'
 fi
 
 if [ ! host_setup ]; then
-    echo ">> CSR:"
-    openssl req -in ${CSR} -noout -text
-    echo ">> CRT:"
+    echo ">> Starting with existing certificates."
+    echo ">> CA certificate:"
+    openssl x509 -in ${CA_CRT} -text -noout
+    echo ">> Certificate:"
     openssl x509 -in ${CRT} -text -noout
 fi
 
-chown 1000.1000 -R ${CERTS_FOLDER}
-chown 1000.1000 -R ${CA_FOLDER}
+chown ${LOCAL_USER}.${LOCAL_GROUP} -R ${CERTS_FOLDER}
+chown ${LOCAL_USER}.${LOCAL_GROUP} -R ${CA_FOLDER}
 
 exec "$@"

@@ -10,5 +10,5 @@ COPY bin/ /usr/local/lib/ssl/
 COPY template/ /usr/local/etc/ssl/template/
 RUN chmod +x -R /usr/local/lib/ssl/
 
-VOLUME ["/usr/local/etc/ssl/certs/", "/usr/local/etc/ssl/ca/"]
+VOLUME ["/usr/local/share/ca-certificates/certs/", "/usr/local/share/ca-certificates/ca/"]
 ENTRYPOINT ["/usr/local/lib/ssl/entrypoint.sh"]
