@@ -17,7 +17,7 @@ if [ ! -f ${CA_CRT} ]; then
     openssl x509 -in ${CA_CRT_FILE} -text -noout
     ls -lah ${CA_FOLDER}
 else
-    echo '>> Found existing CA '${LOCAL_CA}'/'${CA_FILE}
+    echo '>> Found existing CA '${CA_CRT}
 fi
 
 # create cert if necessary
@@ -34,7 +34,7 @@ if [ ! -f ${CRT} ]; then
     openssl ca -batch -config /usr/local/etc/ssl/ca.cnf -policy signing_policy -extensions signing_req -out ${CRT_FILE} -infiles ${CSR_FILE}
     openssl x509 -in ${CRT_FILE} -text -noout
 else
-    echo '>> Found existing certificate '${LOCAL_CERTS}'/'${CRT_FILE}''
+    echo '>> Found existing certificate '${CRT}''
 fi
 
 # publish cert to local folder if necessary
@@ -42,7 +42,7 @@ if [ ! -f ${LOCAL_CERTS}'/'${CRT_FILE} ]; then
     mkdir -p ${LOCAL_CERTS}
     cp -v ${CRT} ${LOCAL_CERTS}'/'
 else
-    echo '>> Certificate already published to local.'
+    echo '>> Certificate '${CRT_FILE}' already published to local.'
 fi
 
 # publish key to local folder if necessary
@@ -50,7 +50,7 @@ if [ ! -f ${LOCAL_CERTS}'/'${KEY_FILE} ]; then
     mkdir -p ${LOCAL_CERTS}
     cp -v ${KEY} ${LOCAL_CERTS}'/'
 else
-    echo '>> Key already published to local.'
+    echo '>> Key '${KEY_FILE}' already published to local.'
 fi
 
 # publish ca to local machine if necessary
@@ -58,7 +58,7 @@ if [ ! -f ${LOCAL_CA}'/'${CA_CRT_FILE} ]; then
     mkdir -p ${LOCAL_CA}
     cp -v ${CA_CRT} ${LOCAL_CA}
 else
-    echo '>> CA certificate already published to local.'
+    echo '>> CA certificate '${CA_CRT_FILE}' already published to local.'
 fi
 
 if [ ! host_setup ]; then
