@@ -2,9 +2,9 @@
 
 export UNIQUE_CERT_NAME=${UNIQUE_CERT_NAME:-}
 
-export CN=${CN:-'A Company that Makes Everything'}
-export O=${O:-'ACME'}
-export OU=${OU:-'Domain Control Validated'}
+export CN=${CN:-${UNIQUE_CERT_NAME}}
+export O=${O:-${UNIQUE_CERT_NAME}}
+export OU=${OU:-${UNIQUE_CERT_NAME}}
 
 export LOCAL_CERTS=${LOCAL_CERTS:-'/local/certs'}
 export LOCAL_CA=${LOCAL_CA:-'/local/ca'}
@@ -17,9 +17,9 @@ export CA_CRT_FILE=${CA_CRT_FILE:-${UNIQUE_CERT_NAME}'cacrt.pem.crt'}
 export CA_KEY=${CA_KEY:-${CA_FOLDER}'/'${CA_KEY_FILE}}
 export CA_CRT=${CA_CRT:-${CA_FOLDER}'/'${CA_CRT_FILE}}
 
-export CA_CN=${CA_CN:-'A Company that Validates Everything'}
-export CA_O=${CA_O:-'ACVE'}
-export CA_OU=${CA_OU:-'Validations for everything'}
+export CA_CN=${CA_CN:-${UNIQUE_CERT_NAME}}
+export CA_O=${CA_O:-${UNIQUE_CERT_NAME}}
+export CA_OU=${CA_OU:-${UNIQUE_CERT_NAME}}
 
 export KEY_FILE=${KEY_FILE:-${UNIQUE_CERT_NAME}'.key'}
 export CRT_FILE=${CRT_FILE:-${UNIQUE_CERT_NAME}'.crt'}

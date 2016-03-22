@@ -5,6 +5,8 @@
 . /usr/local/lib/ssl/entrypoint.functions.sh
 . /usr/local/lib/ssl/template.renderer.sh
 
+echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
+
 # make sure there the specified ca exists
 if [ ! -f ${CA_CRT} ]; then
     cd ${CA_FOLDER}
