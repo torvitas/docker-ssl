@@ -7,7 +7,7 @@
 
 echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
 
-# make sure there the specified ca exists
+# make sure that the specified ca exists
 if [ ! -f ${CA_CRT} ]; then
     cd ${CA_FOLDER}
     echo '>> Rendering ca config template.'
@@ -15,7 +15,7 @@ if [ ! -f ${CA_CRT} ]; then
     touch ${CA_FOLDER}'/index.txt'
     echo '01' > ${CA_FOLDER}'/serial.txt'
     echo '>> Creating ca certificate and key.'
-    openssl req -x509 -config /usr/local/etc/ssl/ca.cnf -newkey rsa:4096 -sha256 -nodes -out ${CA_CRT_FILE} -outform PEM
+    openssl req -x509 -days 11499 -config /usr/local/etc/ssl/ca.cnf -newkey rsa:4096 -sha256 -nodes -out ${CA_CRT_FILE} -outform PEM
     openssl x509 -in ${CA_CRT_FILE} -text -noout
     ls -lah ${CA_FOLDER}
 else
