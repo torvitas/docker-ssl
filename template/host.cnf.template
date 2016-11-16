@@ -11,9 +11,9 @@ prompt = no
 
 ####################################################################
 [ server_distinguished_name ]
-CN           = ${CN}
+CN           = "<Not Part Of Certificate>"
+O            = "<Not Part Of Certificate>"
 OU           = ${OU}
-O            = ${O}
 
 ####################################################################
 [ server_req_extensions ]

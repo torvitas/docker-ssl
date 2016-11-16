@@ -11,7 +11,7 @@ if [ ! -f ${CA_CRT} ]; then
     echo '>> Rendering ca config template.'
     render /usr/local/etc/ssl/template/ca.cnf.template -- > /usr/local/etc/ssl/ca.cnf
     touch ${CA_FOLDER}'/index.txt'
-    echo '01' > ${CA_FOLDER}'/serial.txt'
+    echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
     echo '>> Creating ca certificate and key.'
     openssl req -x509 -days 11499 -config /usr/local/etc/ssl/ca.cnf -newkey rsa:4096 -sha256 -nodes -out ${CA_CRT_FILE} -outform PEM
     openssl x509 -in ${CA_CRT_FILE} -text -noout
@@ -22,7 +22,6 @@ fi
 
 # create cert if necessary
 if [ ! -f ${CRT} ]; then
-    echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
     cd ${CERTS_FOLDER}
     host_setup=1
     echo '>> Rendering host config template.'
