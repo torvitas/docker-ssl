@@ -5,10 +5,6 @@
 . /usr/local/lib/ssl/entrypoint.functions.sh
 . /usr/local/lib/ssl/template.renderer.sh
 
-if [ ! -f ${CA_FOLDER}'/'serial.txt ]; then
-    echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
-fi
-
 # make sure that the specified ca exists
 if [ ! -f ${CA_CRT} ]; then
     cd ${CA_FOLDER}
@@ -26,6 +22,7 @@ fi
 
 # create cert if necessary
 if [ ! -f ${CRT} ]; then
+    echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
     cd ${CERTS_FOLDER}
     host_setup=1
     echo '>> Rendering host config template.'
