@@ -5,7 +5,9 @@
 . /usr/local/lib/ssl/entrypoint.functions.sh
 . /usr/local/lib/ssl/template.renderer.sh
 
-echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
+if [ ! -f ${CA_FOLDER}'/'serial.txt ]; then
+    echo $(date +%s) > ${CA_FOLDER}'/'serial.txt
+fi
 
 # make sure that the specified ca exists
 if [ ! -f ${CA_CRT} ]; then
